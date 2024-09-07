@@ -57,3 +57,5 @@ function draw_one_frame(words, vocal, drum, bass, other,counter) {
   fill(0, 0, 0, int(last_words_opacity));
   text(words, width/2, height/2);
 }
+
+

@@ -14,10 +14,10 @@ let last_words_opacity = 0;
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
  if (firstRun) {
 rectMode(CENTER);
-Cat.push(loadImage('cat.guitar3.png'));
-Cat.push(loadImage('cat.guitar4.png'));
-Cat.push(loadImage('cat.guitar1.png'));
-Cat.push(loadImage('cat.guitar2.png'));
+Cat.push(loadImage('cat.bass3.png'));
+Cat.push(loadImage('cat.bass4.png'));
+Cat.push(loadImage('cat.bass1.png'));
+Cat.push(loadImage('cat.bass2.png'));
 
 Cat2.push(loadImage('cat.drum1.png'));
 Cat2.push(loadImage('cat.drum5.png'));
@@ -37,38 +37,70 @@ firstRun = false
  }
  function setup() {
   createCanvas(1200, 800);
-
+  
 }
 
 background(20, 20, 40); 
+  let vocalHue = map(vocal, 0, 100, 30, 50); 
+  let drumHue = map(drum, 0, 100, 60, 90);   
+  let bassHue = map(bass, 0, 100, 60, 90);   
+
+  let vocalOpacity = map(vocal, 0, 100, 80, 100); 
+  let drumOpacity = map(drum, 0, 100, 80, 100);   
+  let bassOpacity = map(bass, 0, 100, 80, 100);  
 
 
-// Stage platform
-fill(60); 
-noStroke(50);
-ellipse(width / 2, height - 200, width - 50, 70); 
+// shadow for the stage platform
+fill(60);  
+noStroke();
+ellipse(width / 2, height - 130, width + 300, 100)
+
+// stage platform 
+  fill(100);  
+noStroke();
+ellipse(width / 2, height - 170, width + 300, 100)
 
 
 
+  noStroke();
+  colorMode(HSB, 100);
 
-
-// Spotlight 
-fill(100);
+// left spotlight 
+fill(bassHue, 100, 30, bassOpacity);
 beginShape();
-vertex(width / 3, height - 200);        // Bottom left of the spotlight
-vertex(width / 2 - 70, 0);              // Top left focus point
-vertex(width / 3 + 70, 0);              // Top right focus point
-vertex(width / 3 + 150, height - 210);  // Bottom right of the spotlight
-quadraticVertex(width / 3 + 130, height - 190, width / 3 + 100, height - 190); // Rounded bottom curve
-quadraticVertex(width / 3 + 50, height - 180, width / 3, height - 200); // Connect back to the left side
+vertex(width / 4 - 100, height - 200);  // bottom left 
+vertex(width / 4 + 40, height - 200);  // bottom right 
+vertex(width / 4 - 10, 0); // top right of the light beam
+vertex(width / 5 - 40, 0); // top left of the light beam
 endShape(CLOSE);
+ellipse(width / 4 - 30, height - 200, 140, 50); 
 
-  
+// center spotlight 
+fill(vocalHue, 100, 30, vocalOpacity);
+beginShape();
+vertex(width / 2 - 70, height - 200);  // bottom left 
+vertex(width / 2 + 70, height - 200);  // bottom right 
+vertex(width / 2 + 30, 0); // top right 
+vertex(width / 2 - 30, 0); // top left 
+endShape(CLOSE);
+ellipse(width / 2, height - 200, 140, 50); 
+
+// right spotlight 
+fill(drumHue, 100, 30, drumOpacity);
+beginShape();
+vertex(3 * width / 4 - 40, height - 200);  // bottom left 
+vertex(3 * width / 4 + 100, height - 200);  // bottom right 
+vertex(3 * width / 4 + 60, 0); // top right 
+vertex(3 * width / 3.8 - 20, 0); // top left 
+endShape(CLOSE);
+ellipse(3 * width / 4 + 30, height - 200, 140, 50);
 
 
-  last_words = words;
 
-  textFont('Gagalin');
+colorMode(RGB);
+last_words = words;
+
+  textFont('Georgia');
   textAlign(CENTER);
   textStyle(BOLD);
   textSize(70);
@@ -77,14 +109,23 @@ endShape(CLOSE);
   text(words, width/2, height/2);
   
 
+  if(words == "") {
+    last_words_opacity = last_words_opacity * 0.95;
+    words = last_words;
+  }
+  else {
+    last_words_opacity = (1 + last_words_opacity) * 1.1;
+    if(last_words_opacity > 255) {
+      last_words_opacity = 255;
+    }
+  }
 
 
- 
     let bassFrame = int(map(bass, 10, 100, 0, 4));
 console.log(bassFrame);
 push();
 scale(0.13);
-image(Cat[bassFrame], - 300, height/2 + 3900)
+image(Cat[bassFrame], - 250, height/2 + 3900)
 pop();
  
 
@@ -92,12 +133,11 @@ pop();
   console.log(drumFrame);
   push();
   scale(0.23);
-  image(Cat2[drumFrame], width / 0.5, height / 2 + 1250); 
+  image(Cat2[drumFrame], width / 0.48, height / 2 + 1250); 
   pop();
 
 
-  let vocalFrame;
-
+  let vocalFrame;   
   if (vocal < 60) {
     vocalFrame = 0; 
   } else if (vocal < 70) {
@@ -115,19 +155,9 @@ pop();
   console.log(vocalFrame);
   push();
   scale(0.18);
-  image(Cat3[vocalFrame], 600, height / 2 + 2100); 
+  image(Cat3[vocalFrame], 700, height / 2 + 2100); 
   pop();
 
-  if(words == "") {
-    last_words_opacity = last_words_opacity * 0.95;
-    words = last_words;
-  }
-  else {
-    last_words_opacity = (1 + last_words_opacity) * 1.1;
-    if(last_words_opacity > 255) {
-      last_words_opacity = 255;
-    }
-  }
 
 
 }
