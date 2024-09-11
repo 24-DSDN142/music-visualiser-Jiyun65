@@ -83,16 +83,16 @@ for (let i = 0; i < 10; i++) {
   // left ear
   fill(circleHue, 100, 60);
   beginShape();
-  vertex(catX - catSize / 2.2, catY - catSize / 4.5); // Bottom left
-  vertex(catX - catSize * 0.6, catY - catSize * 0.7); // Top left
-  vertex(catX - catSize * 0.2, catY - catSize * 0.4); // Bottom right
+  vertex(catX - catSize / 2.2, catY - catSize / 4.5); // bottom left
+  vertex(catX - catSize * 0.6, catY - catSize * 0.7); // top left
+  vertex(catX - catSize * 0.2, catY - catSize * 0.4); // bottom right
   endShape(CLOSE);
 
   // right ear
   beginShape();
-  vertex(catX + catSize / 2.2, catY - catSize / 4.5); // Bottom left
-  vertex(catX + catSize * 0.6, catY - catSize * 0.7); // Top right
-  vertex(catX + catSize * 0.2, catY - catSize * 0.4); // Bottom right
+  vertex(catX + catSize / 2.2, catY - catSize / 4.5); // bottom left
+  vertex(catX + catSize * 0.6, catY - catSize * 0.7); // top right
+  vertex(catX + catSize * 0.2, catY - catSize * 0.4); // bottom right
   endShape(CLOSE);
 
   // cat's head
@@ -107,8 +107,8 @@ fill(bassHue, 100, 30, bassOpacity);
 beginShape();
 vertex(width / 4 - 100, height - 340);  // bottom left 
 vertex(width / 4 + 40, height - 340);  // bottom right 
-vertex(width / 4 - 10, 0); // top right of the light beam
-vertex(width / 5 - 40, 0); // top left of the light beam
+vertex(width / 4 - 10, 0); // top right 
+vertex(width / 5 - 40, 0); // top left 
 endShape(CLOSE);
 ellipse(width / 4 - 30, height - 340, 140, 50); 
 
