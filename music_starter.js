@@ -6,6 +6,7 @@ let Cat2 = [];
 let Cat3 = [];
 let words_cat = [];
 
+let taxidriverImage;
 let last_words = "";
 let last_words_opacity = 0;
 
@@ -32,6 +33,8 @@ Cat3.push(loadImage('cat.vocal2.png'));
 Cat3.push(loadImage('cat.vocal3.png'));
 Cat3.push(loadImage('cat.vocal4.png'));
 
+taxidriverImage = loadImage('taxidriver.png');
+
 
 firstRun = false
  }
@@ -39,6 +42,8 @@ firstRun = false
   createCanvas(1200, 800);
   
 }
+
+
 
 background(20, 20, 40); 
   let vocalHue = map(vocal, 0, 100, 30, 50); 
@@ -53,60 +58,93 @@ background(20, 20, 40);
 // shadow for the stage platform
 fill(60);  
 noStroke();
-ellipse(width / 2, height - 130, width + 300, 100)
+ellipse(width / 2, height - 300, width + 300, 100)
 
 // stage platform 
   fill(100);  
 noStroke();
-ellipse(width / 2, height - 170, width + 300, 100)
-
+ellipse(width / 2, height - 340, width + 300, 100)
 
 
   noStroke();
   colorMode(HSB, 100);
 
+  
+  let circleHue = map(other, 0, 100, 0, 100);
+  fill(circleHue, 100, 80);
+  
+  let catSize = 60; 
+  let catY = height - 190; 
+  let spacing = 80; 
+
+for (let i = 0; i < 10; i++) {
+  let catX = i * spacing;+ spacing / 0.5;
+
+  // left ear
+  fill(circleHue, 100, 60);
+  beginShape();
+  vertex(catX - catSize / 2.2, catY - catSize / 4.5); // Bottom left
+  vertex(catX - catSize * 0.6, catY - catSize * 0.7); // Top left
+  vertex(catX - catSize * 0.2, catY - catSize * 0.4); // Bottom right
+  endShape(CLOSE);
+
+  // right ear
+  beginShape();
+  vertex(catX + catSize / 2.2, catY - catSize / 4.5); // Bottom left
+  vertex(catX + catSize * 0.6, catY - catSize * 0.7); // Top right
+  vertex(catX + catSize * 0.2, catY - catSize * 0.4); // Bottom right
+  endShape(CLOSE);
+
+  // cat's head
+  fill(circleHue, 100, 60);
+  ellipse(catX, catY, catSize, catSize);
+}
+
+
+
 // left spotlight 
 fill(bassHue, 100, 30, bassOpacity);
 beginShape();
-vertex(width / 4 - 100, height - 200);  // bottom left 
-vertex(width / 4 + 40, height - 200);  // bottom right 
+vertex(width / 4 - 100, height - 340);  // bottom left 
+vertex(width / 4 + 40, height - 340);  // bottom right 
 vertex(width / 4 - 10, 0); // top right of the light beam
 vertex(width / 5 - 40, 0); // top left of the light beam
 endShape(CLOSE);
-ellipse(width / 4 - 30, height - 200, 140, 50); 
+ellipse(width / 4 - 30, height - 340, 140, 50); 
 
 // center spotlight 
 fill(vocalHue, 100, 30, vocalOpacity);
 beginShape();
-vertex(width / 2 - 70, height - 200);  // bottom left 
-vertex(width / 2 + 70, height - 200);  // bottom right 
+vertex(width / 2 - 70, height - 340);  // bottom left 
+vertex(width / 2 + 70, height - 340);  // bottom right 
 vertex(width / 2 + 30, 0); // top right 
 vertex(width / 2 - 30, 0); // top left 
 endShape(CLOSE);
-ellipse(width / 2, height - 200, 140, 50); 
+ellipse(width / 2, height - 340, 140, 50); 
 
 // right spotlight 
 fill(drumHue, 100, 30, drumOpacity);
 beginShape();
-vertex(3 * width / 4 - 40, height - 200);  // bottom left 
-vertex(3 * width / 4 + 100, height - 200);  // bottom right 
+vertex(3 * width / 4 - 40, height - 340);  // bottom left 
+vertex(3 * width / 4 + 100, height - 340);  // bottom right 
 vertex(3 * width / 4 + 60, 0); // top right 
 vertex(3 * width / 3.8 - 20, 0); // top left 
 endShape(CLOSE);
-ellipse(3 * width / 4 + 30, height - 200, 140, 50);
+ellipse(3 * width / 4 + 30, height - 340, 140, 50);
 
 
 
 colorMode(RGB);
 last_words = words;
 
-  textFont('Georgia');
+  textFont('Marker Felt');
   textAlign(CENTER);
   textStyle(BOLD);
   textSize(70);
   noStroke();
   fill(245, 255, 133, int(last_words_opacity));
-  text(words, width/2, height/2);
+  text(words, width/2, height/2 - 200);
+
   
 
   if(words == "") {
@@ -121,11 +159,23 @@ last_words = words;
   }
 
 
+   
+  if (words === "taxi" || words === "driver") {
+  
+    push();
+    noStroke();  
+    imageMode(CENTER);  
+    image(taxidriverImage, width / 2, height / 3, 300, 200);  
+    pop();
+  }
+
+  
+
     let bassFrame = int(map(bass, 10, 100, 0, 4));
 console.log(bassFrame);
 push();
 scale(0.13);
-image(Cat[bassFrame], - 250, height/2 + 3900)
+image(Cat[bassFrame], - 250, height/2 + 2850)
 pop();
  
 
@@ -133,7 +183,7 @@ pop();
   console.log(drumFrame);
   push();
   scale(0.23);
-  image(Cat2[drumFrame], width / 0.48, height / 2 + 1250); 
+  image(Cat2[drumFrame], width / 0.48, height / 2 + 650); 
   pop();
 
 
@@ -155,7 +205,7 @@ pop();
   console.log(vocalFrame);
   push();
   scale(0.18);
-  image(Cat3[vocalFrame], 700, height / 2 + 2100); 
+  image(Cat3[vocalFrame], 700, height / 2 + 1350); 
   pop();
 
 
